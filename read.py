@@ -3,9 +3,9 @@ import os
 SECTOR_SIZE = 512
 
 def read_metadata(disk, file_name, total_size):
-    disk.seek(SECTOR_SIZE)  # Пропускаем первый сектор
+    disk.seek(SECTOR_SIZE)
     buffer = disk.read(SECTOR_SIZE)
-    sector_num = 1  # Начинаем с 1
+    sector_num = 1
 
     while buffer:
         if buffer.strip(b'\x00'):
@@ -56,7 +56,6 @@ def main():
 
             file_data = read_file_from_disk(disk, file_metadata)
 
-            # Записываем содержимое файла в out.aif
             with open(file_name, 'wb') as out_file:
                 out_file.write(file_data)
             

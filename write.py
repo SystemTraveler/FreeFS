@@ -2,12 +2,12 @@ import os
 import time
 
 SECTOR_SIZE = 512
-BUFFER_SIZE = 1024 * 1024  # 1 MB
+BUFFER_SIZE = 1024 * 1024
 
 def find_next_free_sector(disk, total_size):
-    disk.seek(SECTOR_SIZE)  # Пропускаем первый сектор с сигнатурой
+    disk.seek(SECTOR_SIZE)
     buffer = disk.read(SECTOR_SIZE)
-    sector_num = 1  # Начинаем с 1, так как 0 занят сигнатурой
+    sector_num = 1
 
     while buffer:
         if buffer.strip(b'\x00'):
@@ -21,18 +21,16 @@ def find_next_free_sector(disk, total_size):
     return -1
 
 def file_exists(disk, file_name, total_size):
-    disk.seek(SECTOR_SIZE)  # Пропускаем первый сектор
+    disk.seek(SECTOR_SIZE)
     buffer = disk.read(SECTOR_SIZE)
-    sector_num = 1  # Начинаем с 1
+    sector_num = 1
 
     while buffer:
         if buffer.strip(b'\x00'):
-            # Проверяем метаданные
             metadata = buffer.decode(errors='ignore').strip()
             if metadata.startswith(f"FILE={file_name};"):
                 return True
-            
-            # Ищем дальше
+
             disk.seek(SECTOR_SIZE, os.SEEK_CUR)
         else:
             disk.seek(SECTOR_SIZE, os.SEEK_CUR)
@@ -45,7 +43,7 @@ def file_exists(disk, file_name, total_size):
 def write_file_to_disk(disk, file_path, start_sector):
     with open(file_path, 'rb') as file:
         file_data = file.read()
-        num_sectors = (len(file_data) + SECTOR_SIZE - 1) // SECTOR_SIZE  # Округляем вверх
+        num_sectors = (len(file_data) + SECTOR_SIZE - 1) // SECTOR_SIZE
 
         file.seek(0)
         for i in range(0, len(file_data), BUFFER_SIZE):
