@@ -63,7 +63,7 @@ def write_metadata(disk, file_name, num_sectors, start_sector):
     disk.write(metadata.encode())
 
 def main():
-    disk_path = "./disk.img"
+    disk_path = "./" + input("Enter the name of disk (without extension): ") + ".fimg"
 
     try:
         with open(disk_path, 'r+b') as disk:

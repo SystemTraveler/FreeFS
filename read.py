@@ -41,7 +41,7 @@ def read_file_from_disk(disk, file_metadata):
     return file_data
 
 def main():
-    disk_path = "./disk.img"
+    disk_path = "./" + input("Enter the name of disk (without extension): ") + ".fimg"
 
     try:
         with open(disk_path, 'r+b') as disk:

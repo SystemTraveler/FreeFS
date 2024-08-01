@@ -31,8 +31,8 @@ def format_disk(disk_path, total_size):
     print("Wrote 'END' marker to the last sector.")
 
 def main():
-    disk_path = "./disk.img"
-    total_size = 64 * 1024 * 1024
+    disk_path = "./" + input("Enter the name of disk (without extension): ") + ".fimg"
+    total_size = int(input("Size MB?")) * 1024 * 1024
     format_disk(disk_path, total_size)
 
 if __name__ == "__main__":
